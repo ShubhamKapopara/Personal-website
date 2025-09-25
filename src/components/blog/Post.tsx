@@ -34,8 +34,9 @@ export default function Post({ post, thumbnail, direction }: PostProps) {
           radius="l"
           src={post.metadata.image}
           alt={"Thumbnail of " + post.metadata.title}
-          aspectRatio="16 / 9"
+          aspectRatio="auto"
         />
+        
       )}
       <Row fillWidth>
         <Column maxWidth={28} paddingY="24" paddingX="l" gap="20" vertical="center">
