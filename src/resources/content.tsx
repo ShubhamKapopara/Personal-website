@@ -13,9 +13,9 @@ const person: Person = {
 };
 
 const newsletter: Newsletter = {
-  display: false,
-  title: <>Subscribe to {person.firstName}'s Newsletter</>,
-  description: <>My weekly newsletter about creativity and engineering</>,
+  display: true,
+  title: <>Let’s Connect to {person.firstName}</>,
+  description: <>Have a question or opportunity? Drop your email and I’ll be in touch. </>,
 };
 
 const social: Social = [
@@ -31,7 +31,7 @@ const social: Social = [
     icon: "linkedin",
     link: "https://www.linkedin.com/in/shubham-kapopara-18bb26244/",
   },
- 
+
   {
     name: "Email",
     icon: "email",
@@ -50,32 +50,35 @@ const home: Home = {
     display: true,
     title: (
       <Row gap="12" vertical="center">
-              <Text marginRight="4" onBackground="brand-medium">
+        <Text marginRight="4" onBackground="brand-medium">
           Featured work
         </Text>
       </Row>
     ),
     href: "/work/building-once-ui-a-customizable-design-system",
   },
-//   subline: (
-//     <>
-//       I'm Selene, a design engineer at {" "}
-//       <Logo
-//         dark
-//         icon="/trademarks/wordmark-dark.svg"
-//         style={{ display: "inline-flex", top: "0.25em", marginLeft: "-0.25em" }}
-//       />
-//       , where I craft intuitive
-//       <br /> user experiences. After hours, I build my own projects.
-//     </>
-//   ),
-// };
+  //   subline: (
+  //     <>
+  //       I'm Selene, a design engineer at {" "}
+  //       <Logo
+  //         dark
+  //         icon="/trademarks/wordmark-dark.svg"
+  //         style={{ display: "inline-flex", top: "0.25em", marginLeft: "-0.25em" }}
+  //       />
+  //       , where I craft intuitive
+  //       <br /> user experiences. After hours, I build my own projects.
+  //     </>
+  //   ),
+  // };
 
-subline: (
-  <>
-I'm Shubham Kapopara, a data and business analyst passionate about turning complex datasets into actionable insights. I analyze and interpret data, create clear visualizations, and manage databases to help organizations make smarter, data-driven decisions.  </>
-),
-}
+  subline: (
+    <>
+      I'm Shubham Kapopara, a data and business analyst passionate about turning complex datasets
+      into actionable insights. I analyze and interpret data, create clear visualizations, and
+      manage databases to help organizations make smarter, data-driven decisions.{" "}
+    </>
+  ),
+};
 
 const about: About = {
   path: "/about",
@@ -93,31 +96,25 @@ const about: About = {
     display: true,
     link: "https://cal.com",
   },
- intro: {
-  display: true,
-  title: "Introduction",
-  description: (
-    <div className="about-text">
-      <p>
-        I am a Data Analyst and Business Analyst with strong hands-on experience and a passion 
-        for transforming raw data into meaningful insights. I specialize in creating 
-        advanced visualizations that empower organizations to make informed decisions and drive 
-        sustainable business growth.
-      </p>
+  intro: {
+    display: true,
+    title: "Introduction",
+    description: (
+      <div className="about-text" >
+            I am a Data Analyst and Business Analyst with strong hands-on experience and a passion for
+          transforming raw data into meaningful insights. I specialize in creating advanced
+          visualizations that empower organizations to make informed decisions and drive sustainable
+          business growth.
+          
+          Alongside my analytical expertise, I bring a solid background in software engineering,
+          enabling me to design and implement efficient, scalable solutions that integrate
+          seamlessly with business processes.
 
-      <p>
-        Alongside my analytical expertise, I bring a solid background in 
-        software engineering, enabling me to design and implement efficient, scalable solutions 
-        that integrate seamlessly with business processes.
-      </p>
-
-      <p>
-        I am driven by curiosity, problem-solving, and innovation, always seeking opportunities 
-        to apply my technical and analytical skills to deliver measurable impact.
-      </p>
-    </div>
-  ),
-},
+          I am driven by curiosity, problem-solving, and innovation, always seeking opportunities to
+          apply my technical and analytical skills to deliver measurable impact.
+      </div>
+    ),
+  },
 
   // work: {
   //   display: true, // set to false to hide this section
@@ -166,85 +163,93 @@ const about: About = {
   //   ],
   // },
 
+  
 
-  // ==>
-
-work: {
-  display: true, // set to false to hide this section
-  title: "Work Experience",
-  experiences: [
-    {
-      company: "Alpha Circuit LLC",
-      location: "Chicago, IL",
-      timeframe: "Feb 2025 – May 2025",
-      role: "Data Analyst Intern",
-      achievements: [
-        <>
-          Designed predictive analytics dashboards to track production metrics and identify defect risks.
-        </>,
-        <>
-          Built and deployed machine learning models (Random Forest, Logistic Regression) to predict high-defect occurrences and improve product quality.
-        </>,
-        <>
-          Conducted trend and time-series analysis on defect rates to recommend process improvements.
-        </>,
-        <>
-          Automated data extraction, cleaning, and visualization workflows using Python, pandas, scikit-learn, Matplotlib, and Excel.
-        </>,
-        <>
-          Collaborated with cross-functional teams to translate business needs into actionable, data-driven insights.
-        </>,
-      ],
-      images: [],
-    },
-    {
-      company: "Roosevelt University",
-      location: "Chicago, IL",
-      timeframe: "Sep 2024 – Present",
-      role: "Stage Lighting Assistant",
-      achievements: [
-        <>
-          Supported theatre productions by hanging, powering, and focusing stage lighting instruments.
-        </>,
-        <>
-          Troubleshot technical issues to ensure safe, reliable, and timely setups.
-        </>,
-        <>
-          Assisted in equipment maintenance, cataloguing, and repair, keeping systems performance-ready.
-        </>,
-        <>
-          Collaborated with lighting designers, technical staff, and student crews in a fast-paced production environment.
-        </>,
-      ],
-      images: [],
-    },
-    {
-      company: "Gaura Web Technology",
-      location: "Ahmedabad, India",
-      timeframe: "Feb 2023 – Aug 2023",
-      role: "MERN Stack Developer",
-      achievements: [
-        <>
-          Designed and developed frontend web applications and integrated them with backend APIs.
-        </>,
-        <>
-          Contributed to the “GuaraX” project and explored blockchain-based initiatives such as MetaXland, ArtNoMon, and MG-Wallet.
-        </>,
-        <>
-          Conducted NFT market research to inform product strategy and enhance blockchain integration.
-        </>,
-        <>
-          Collaborated in an Agile team environment, using MongoDB, React.js, Node.js, and Postman for API testing.
-        </>,
-        <>
-          Achievement: Recognized as Emerging Employee of the Month for impactful contributions to projects and rapid learning.
-        </>,
-      ],
-      images: [],
-    },
-  ],
-},
-
+  work: {
+    display: true, // set to false to hide this section
+    title: "Work Experience",
+    experiences: [
+      {
+        company: "Alpha Circuit LLC",
+        location: "Chicago, IL",
+        timeframe: "Feb 2025 – May 2025",
+        role: "Data Analyst Intern",
+        achievements: [
+          <>
+            Designed predictive analytics dashboards to track production metrics and identify defect
+            risks.
+          </>,
+          <>
+            Built and deployed machine learning models (Random Forest, Logistic Regression) to
+            predict high-defect occurrences and improve product quality.
+          </>,
+          <>
+            Conducted trend and time-series analysis on defect rates to recommend process
+            improvements.
+          </>,
+          <>
+            Automated data extraction, cleaning, and visualization workflows using Python, pandas,
+            scikit-learn, Matplotlib, and Excel.
+          </>,
+          <>
+            Collaborated with cross-functional teams to translate business needs into actionable,
+            data-driven insights.
+          </>,
+        ],
+        images: [],
+      },
+      {
+        company: "Roosevelt University",
+        location: "Chicago, IL",
+        timeframe: "Sep 2024 – Present",
+        role: "Stage Lighting Assistant",
+        achievements: [
+          <>
+            Supported theatre productions by hanging, powering, and focusing stage lighting
+            instruments.
+          </>,
+          <>Troubleshot technical issues to ensure safe, reliable, and timely setups.</>,
+          <>
+            Assisted in equipment maintenance, cataloguing, and repair, keeping systems
+            performance-ready.
+          </>,
+          <>
+            Collaborated with lighting designers, technical staff, and student crews in a fast-paced
+            production environment.
+          </>,
+        ],
+        images: [],
+      },
+      {
+        company: "Gaura Web Technology",
+        location: "Ahmedabad, India",
+        timeframe: "Feb 2023 – Aug 2023",
+        role: "MERN Stack Developer",
+        achievements: [
+          <>
+            Designed and developed frontend web applications and integrated them with backend APIs.
+          </>,
+          <>
+            Contributed to the “GuaraX” project and explored blockchain-based initiatives such as
+            MetaXland, ArtNoMon, and MG-Wallet.
+          </>,
+          <>
+            Conducted NFT market research to inform product strategy and enhance blockchain
+            integration.
+          </>,
+          <>
+            Collaborated in an Agile team environment, using MongoDB, React.js, Node.js, and Postman
+            for API testing.
+          </>,
+          <>
+            Achievement: Recognized as Emerging Employee of the Month for impactful contributions to
+            projects and rapid learning.
+          </>,
+        ],
+        images: [],
+      },
+    ],
+  },
 
   studies: {
     display: true, // set to false to hide this section
@@ -253,10 +258,14 @@ work: {
       {
         name: "Roosevelt University",
         description: <>Master of Science in Computer Science</>,
+        graduation: "AUG 2024 – PRESENT",
+        gpa: "3.94",
       },
       {
         name: "SAL Engineering and Technical Institute",
         description: <>Bachelor of Engineering in Computer Engineering</>,
+        graduation: "Jun 2019 – Jun 2023",
+        gpa: "3.5",
       },
     ],
   },
@@ -319,85 +328,96 @@ work: {
   //           height: 9,
   //         },
   //       ],
-  //     },  
+  //     },
   //   ],
   // },
 
   technical: {
-  display: true, // set to false to hide this section
-  title: "Technical Skills",
-  skills: [
-    {
-      title: "Data Analysis & Visualization",
-      description: (
-        <>Skilled in transforming raw data into actionable insights and building dashboards to support strategic decision-making.</>
-      ),
-      tags: [
-        { name: "Python", icon: "python" },
-        { name: "SQL", icon: "sql" },
-        { name: "Excel", icon: "excel" },
-        { name: "Tableau", icon: "tableau" },
-        { name: "Power BI", icon: "powerbi" },
-        { name: "pandas", icon: "pandas" },
-        { name: "Matplotlib", icon: "matplotlib" },
-      ],
-      images: [],
-    },
-    {
-      title: "Software Engineering",
-      description: (
-        <>Experienced in designing, developing, and deploying scalable web applications with modern frameworks.</>
-      ),
-      tags: [
-        { name: "JavaScript", icon: "javascript" },
-        { name: "React.js", icon: "react" },
-        { name: "Node.js", icon: "nodejs" },
-        { name: "Express.js", icon: "express" },
-        { name: "MongoDB", icon: "mongodb" },
-        { name: "Postman", icon: "postman" },
-        { name: "Git", icon: "git" },
-      ],
-      images: [],
-    },
-    {
-      title: "Machine Learning",
-      description: (
-        <>Hands-on experience in building, training, and evaluating machine learning models for predictive analytics and classification.</>
-      ),
-      tags: [
-        { name: "scikit-learn", icon: "sklearn" },
-        { name: "NumPy", icon: "numpy" },
-        { name: "pandas", icon: "pandas" },
-        { name: "Matplotlib", icon: "matplotlib" },
-        { name: "Jupyter Notebook", icon: "jupyter" },
-      ],
-      images: [],
-    },
-    {
-      title: "System Tools & Platforms",
-      description: (
-        <>Proficient in version control, Linux environments, and collaborative tools for seamless project execution.</>
-      ),
-      tags: [
-        { name: "Git", icon: "git" },
-        { name: "GitHub", icon: "github" },
-        { name: "Linux", icon: "linux" },
-        { name: "VS Code", icon: "vscode" },
-        { name: "Google Suite", icon: "google" },
-        { name: "MS Office", icon: "office" },
-      ],
-      images: [],
-    },
-  ],
-},
-
+    display: true, // set to false to hide this section
+    title: "Technical Skills",
+    skills: [
+      {
+        title: "Data Analysis & Visualization",
+        description: (
+          <>
+            Skilled in transforming raw data into actionable insights and building dashboards to
+            support strategic decision-making.
+          </>
+        ),
+        tags: [
+          { name: "Python", icon: "python" },
+          { name: "SQL", icon: "sql" },
+          { name: "Excel", icon: "excel" },
+          { name: "Tableau", icon: "tableau" },
+          { name: "Power BI", icon: "powerbi" },
+          { name: "pandas", icon: "pandas" },
+          { name: "Matplotlib", icon: "matplotlib" },
+        ],
+        images: [],
+      },
+      {
+        title: "Software Engineering",
+        description: (
+          <>
+            Experienced in designing, developing, and deploying scalable web applications with
+            modern frameworks.
+          </>
+        ),
+        tags: [
+          { name: "JavaScript", icon: "javascript" },
+          { name: "React.js", icon: "react" },
+          { name: "Node.js", icon: "nodejs" },
+          { name: "Express.js", icon: "express" },
+          { name: "MongoDB", icon: "mongodb" },
+          { name: "Postman", icon: "postman" },
+          { name: "Git", icon: "git" },
+        ],
+        images: [],
+      },
+      {
+        title: "Machine Learning",
+        description: (
+          <>
+            Hands-on experience in building, training, and evaluating machine learning models for
+            predictive analytics and classification.
+          </>
+        ),
+        tags: [
+          { name: "scikit-learn", icon: "sklearn" },
+          { name: "NumPy", icon: "numpy" },
+          { name: "pandas", icon: "pandas" },
+          { name: "Matplotlib", icon: "matplotlib" },
+          { name: "Jupyter Notebook", icon: "jupyter" },
+        ],
+        images: [],
+      },
+      {
+        title: "System Tools & Platforms",
+        description: (
+          <>
+            Proficient in version control, Linux environments, and collaborative tools for seamless
+            project execution.
+          </>
+        ),
+        tags: [
+          { name: "Git", icon: "git" },
+          { name: "GitHub", icon: "github" },
+          { name: "Linux", icon: "linux" },
+          { name: "VS Code", icon: "vscode" },
+          { name: "Google Suite", icon: "google" },
+          { name: "MS Office", icon: "office" },
+        ],
+        images: [],
+      },
+    ],
+  },
 };
 
 const blog: Blog = {
   path: "/blog",
   label: "Certificates",
   title: "Professional Certifications & Achievements",
-  description: `Read what ${person.name} has been up to recently`,
+  description: `I am committed to continuous learning, professional growth, and achieving technical excellence.`,
   // Create new blog posts by adding a new .mdx file to app/blog/posts
   // All posts will be listed on the /blog route
 };

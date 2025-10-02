@@ -116,11 +116,10 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
               alt={post.metadata.title}
               // aspectRatio="16/9"
               style={{
-    width: "800px",
-    height: "auto",      // keep natural ratio
-    objectFit: "contain" // prevent cropping
-  }}
-
+                width: "800px",
+                height: "auto", // keep natural ratio
+                objectFit: "contain", // prevent cropping
+              }}
               priority
               sizes="(min-width: 768px) 100vw, 768px"
               border="neutral-alpha-weak"
@@ -132,11 +131,8 @@ export default async function Blog({ params }: { params: Promise<{ slug: string 
           <Column as="article" maxWidth="s">
             <CustomMDX source={post.content} />
           </Column>
-          
-          <ShareSection 
-            title={post.metadata.title} 
-            url={`${baseURL}${blog.path}/${post.slug}`} 
-          />
+
+          <ShareSection title={post.metadata.title} url={`${baseURL}${blog.path}/${post.slug}`} />
 
           <Column fillWidth gap="40" horizontal="center" marginTop="40">
             <Line maxWidth="40" />

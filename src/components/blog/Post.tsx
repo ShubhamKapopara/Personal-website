@@ -36,7 +36,6 @@ export default function Post({ post, thumbnail, direction }: PostProps) {
           alt={"Thumbnail of " + post.metadata.title}
           aspectRatio="auto"
         />
-        
       )}
       <Row fillWidth>
         <Column maxWidth={28} paddingY="24" paddingX="l" gap="20" vertical="center">

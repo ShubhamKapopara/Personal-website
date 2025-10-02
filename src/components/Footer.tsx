@@ -26,7 +26,7 @@ export const Footer = () => {
           <Text paddingX="4">{person.name}</Text>
           <Text onBackground="neutral-weak">
             {/* Usage of this template requires attribution. Please don't remove the link to Once UI unless you have a Pro license. */}
-            / Explore my portfolio {" "}
+            / Explore my portfolio{" "}
           </Text>
         </Text>
         <Row gap="16">
@@ -49,4 +49,3 @@ export const Footer = () => {
     </Row>
   );
 };
-

@@ -17,7 +17,6 @@ import TableOfContents from "@/components/about/TableOfContents";
 import styles from "@/components/about/about.module.scss";
 import React from "react";
 
-
 export async function generateMetadata() {
   return Meta.generate({
     title: about.title,
@@ -78,7 +77,7 @@ export default function About() {
           <TableOfContents structure={structure} about={about} />
         </Column>
       )}
-      <Row fillWidth s={{ direction: "column"}} horizontal="center">
+      <Row fillWidth s={{ direction: "column" }} horizontal="center">
         {about.avatar.display && (
           <Column
             className={styles.avatar}
@@ -196,7 +195,7 @@ export default function About() {
           </Column>
 
           {about.intro.display && (
-            <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="xl">
+            <Column textVariant="body-default-l" fillWidth gap="m" marginBottom="xl" style={{ textAlign: "justify", textJustify: "inter-word" }}>
               {about.intro.description}
             </Column>
           )}
@@ -226,6 +225,7 @@ export default function About() {
                           <Text
                             as="li"
                             variant="body-default-m"
+                            style={{ textAlign: "justify", textJustify: "inter-word" }}
                             key={`${experience.company}-${index}`}
                           >
                             {achievement}
@@ -242,6 +242,7 @@ export default function About() {
                             radius="m"
                             minWidth={image.width}
                             height={image.height}
+                            
                           >
                             <Media
                               enlarge
@@ -249,6 +250,7 @@ export default function About() {
                               sizes={image.width.toString()}
                               alt={image.alt}
                               src={image.src}
+                              
                             />
                           </Row>
                         ))}
@@ -268,12 +270,29 @@ export default function About() {
               <Column fillWidth gap="l" marginBottom="40">
                 {about.studies.institutions.map((institution, index) => (
                   <Column key={`${institution.name}-${index}`} fillWidth gap="4">
-                    <Text id={institution.name} variant="heading-strong-l">
-                      {institution.name}
-                    </Text>
-                    <Text variant="heading-default-xs" onBackground="neutral-weak">
-                      {institution.description}
-                    </Text>
+                    {/* First row: Institution name (left) and graduation year (right) */}
+                    <Row fillWidth horizontal="between" vertical="end">
+                      <Text id={institution.name} variant="heading-strong-l">
+                        {institution.name}
+                      </Text>
+                      {institution.graduation && (
+                        <Text variant="heading-default-xs" onBackground="neutral-weak">
+                          {institution.graduation}
+                        </Text>
+                      )}
+                    </Row>
+
+                    {/* Second row: Degree description (left) and GPA (right) */}
+                    <Row fillWidth horizontal="between" vertical="center">
+                      <Text variant="heading-default-xs" onBackground="neutral-weak">
+                        {institution.description}
+                      </Text>
+                      {institution.gpa && (
+                        <Text variant="body-default-s" onBackground="brand-weak" style={{ fontWeight: 600 }}>
+                          GPA {institution.gpa}
+                        </Text>
+                      )}
+                    </Row>
                   </Column>
                 ))}
               </Column>

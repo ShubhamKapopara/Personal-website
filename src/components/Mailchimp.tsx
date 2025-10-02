@@ -15,8 +15,11 @@ function debounce<T extends (...args: any[]) => void>(func: T, delay: number): T
 
 export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...flex }) => {
   const [email, setEmail] = useState<string>("");
+  const [subject, setSubject] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [touched, setTouched] = useState<boolean>(false);
+  const [status, setStatus] = useState<{ state: "idle" | "submitting" | "success" | "error"; message?: string }>({ state: "idle" });
 
   const validateEmail = (email: string): boolean => {
     if (email === "") {
@@ -48,6 +51,36 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
   };
 
   if (newsletter.display === false) return null;
+
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if (!subject.trim() || !message.trim()) {
+      setStatus({ state: "error", message: "Subject and message are required." });
+      return;
+    }
+    setStatus({ state: "submitting" });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, subject, message }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Failed to send message");
+      }
+      setStatus({ state: "success", message: "Message sent! I will get back to you soon." });
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch (err: any) {
+      setStatus({ state: "error", message: err.message || "Something went wrong." });
+    }
+  }
 
   return (
     <Column
@@ -113,30 +146,32 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
         </Text>
       </Column>
       <form
+        onSubmit={onSubmit}
         style={{
           width: "100%",
           display: "flex",
           justifyContent: "center",
         }}
-        action={mailchimp.action}
-        method="post"
-        id="mc-embedded-subscribe-form"
-        name="mc-embedded-subscribe-form"
+        id="contact-form"
+        name="contact-form"
       >
-        <Row
+        <Column
           id="mc_embed_signup_scroll"
           fillWidth
-          maxWidth={24}
-          s={{ direction: "column" }}
           gap="8"
+          // horizontal="center"
+          // align="center"
         >
           <Input
             formNoValidate
-            id="mce-EMAIL"
-            name="EMAIL"
+            id="contact-email"
+            name="email"
             type="email"
             placeholder="Email"
             required
+            value={email}
+            style={{width: "50%", minWidth: "280px", maxWidth: "720px",margin: "0 auto", // this centers horizontally
+              textAlign: "center"}}
             onChange={(e) => {
               if (error) {
                 handleChange(e);
@@ -147,37 +182,44 @@ export const Mailchimp: React.FC<React.ComponentProps<typeof Column>> = ({ ...fl
             onBlur={handleBlur}
             errorMessage={error}
           />
-          <div style={{ display: "none" }}>
-            <input
-              type="checkbox"
-              readOnly
-              name="group[3492][1]"
-              id="mce-group[3492]-3492-0"
-              value=""
-              checked
+          <Input
+            id="contact-subject"
+            name="subject"
+            type="text"
+            placeholder="Subject"
+            required
+            value={subject}
+            style={{ width: "80%", minWidth: "280px", maxWidth: "960px",margin: "0 auto", 
+              textAlign: "center"}}
+            onChange={(e) => setSubject(e.target.value)}
+          />
+          <div>
+            <textarea
+              id="contact-message"
+              name="message"
+              placeholder="Message"
+              required
+              rows={6}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              style={{ width: "100%", padding: "0.75rem", borderRadius: "0.5rem", border: "1px solid var(--neutral-alpha-weak)", background: "var(--surface-background)", color: "var(--neutral-on-background-strong)" }}
             />
           </div>
-          <div id="mce-responses" className="clearfalse">
-            <div className="response" id="mce-error-response" style={{ display: "none" }}></div>
-            <div className="response" id="mce-success-response" style={{ display: "none" }}></div>
-          </div>
-          <div aria-hidden="true" style={{ position: "absolute", left: "-5000px" }}>
-            <input
-              type="text"
-              readOnly
-              name="b_c1a5a210340eb6c7bff33b2ba_0462d244aa"
-              tabIndex={-1}
-              value=""
-            />
-          </div>
+          {status.state !== "idle" && (
+            <Row>
+              <Text onBackground={status.state === "error" ? "accent-strong" : "brand-strong"}>
+                {status.message}
+              </Text>
+            </Row>
+          )}
           <div className="clear">
             <Row height="48" vertical="center">
-              <Button id="mc-embedded-subscribe" value="Subscribe" size="m" fillWidth>
-                Subscribe
+              <Button id="contact-send" type="submit" size="m" fillWidth={false}>
+                Send message
               </Button>
             </Row>
           </div>
-        </Row>
+        </Column>
       </form>
     </Column>
   );

@@ -21,11 +21,7 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
 
   useEffect(() => {
     const performChecks = async () => {
-      setLoading(true);
-      setIsRouteEnabled(false);
-      setIsPasswordRequired(false);
-      setIsAuthenticated(false);
-
+      // determine route enabled synchronously so we don't show a loader for every navigation
       const checkRouteEnabled = () => {
         if (!pathname) return false;
 
@@ -46,16 +42,31 @@ const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
       const routeEnabled = checkRouteEnabled();
       setIsRouteEnabled(routeEnabled);
 
-      if (protectedRoutes[pathname as keyof typeof protectedRoutes]) {
-        setIsPasswordRequired(true);
+      // Only perform the async auth check if this route is configured as protected
+      const needsPassword = Boolean(protectedRoutes[pathname as keyof typeof protectedRoutes]);
+      setIsPasswordRequired(needsPassword);
 
+      if (!needsPassword) {
+        // No async work required — ensure we aren't showing a loader
+        setLoading(false);
+        return;
+      }
+
+      // If we do need to verify auth, show loader until the check completes
+      setLoading(true);
+      try {
         const response = await fetch("/api/check-auth");
         if (response.ok) {
           setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
         }
+      } catch (e) {
+        // network or other failure — treat as unauthenticated
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     performChecks();

@@ -146,7 +146,7 @@ export interface About extends BasePageConfig {
       company: string;
       /** Timeframe of employment */
       location: string;
-            /** location of employment */
+      /** location of employment */
       timeframe: string;
       /** Role or job title */
       role: string;
@@ -177,6 +177,10 @@ export interface About extends BasePageConfig {
       name: string;
       /** Description of studies */
       description: React.ReactNode;
+      /** Optional graduation date or year (display string) */
+      graduation?: string;
+      /** Optional GPA or similar honors */
+      gpa?: string | number;
     }>;
   };
   /** Technical skills section */
