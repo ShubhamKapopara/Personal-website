@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 import { Fade, Flex, Line, Row, ToggleButton } from "@once-ui-system/core";
 
@@ -45,6 +45,15 @@ export default TimeDisplay;
 export const Header = () => {
   const pathname = usePathname() ?? "";
 
+  // Memoize route checks to prevent unnecessary re-renders
+  const routeStates = useMemo(() => ({
+    isHome: pathname === "/",
+    isAbout: pathname === "/about",
+    isWork: pathname.startsWith("/work"),
+    isBlog: pathname.startsWith("/blog"),
+    isGallery: pathname.startsWith("/gallery"),
+  }), [pathname]);
+
   return (
     <>
       <Fade s={{ hide: true }} fillWidth position="fixed" height="80" zIndex={9} />
@@ -87,7 +96,7 @@ export const Header = () => {
           >
             <Row gap="20" vertical="center" textVariant="body-default-s" suppressHydrationWarning>
               {routes["/"] && (
-                <ToggleButton prefixIcon="home" href="/" selected={pathname === "/"} />
+                <ToggleButton prefixIcon="home" href="/" selected={routeStates.isHome} />
               )}
               <Line background="neutral-alpha-medium" vert maxHeight="24" />
               {routes["/about"] && (
@@ -97,14 +106,14 @@ export const Header = () => {
                       prefixIcon="person"
                       href="/about"
                       label={about.label}
-                      selected={pathname === "/about"}
+                      selected={routeStates.isAbout}
                     />
                   </Row>
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
                       prefixIcon="person"
                       href="/about"
-                      selected={pathname === "/about"}
+                      selected={routeStates.isAbout}
                     />
                   </Row>
                 </>
@@ -116,14 +125,14 @@ export const Header = () => {
                       prefixIcon="grid"
                       href="/work"
                       label={work.label}
-                      selected={pathname.startsWith("/work")}
+                      selected={routeStates.isWork}
                     />
                   </Row>
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
                       prefixIcon="grid"
                       href="/work"
-                      selected={pathname.startsWith("/work")}
+                      selected={routeStates.isWork}
                     />
                   </Row>
                 </>
@@ -135,14 +144,14 @@ export const Header = () => {
                       prefixIcon="book"
                       href="/blog"
                       label={blog.label}
-                      selected={pathname.startsWith("/blog")}
+                      selected={routeStates.isBlog}
                     />
                   </Row>
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
                       prefixIcon="book"
                       href="/blog"
-                      selected={pathname.startsWith("/blog")}
+                      selected={routeStates.isBlog}
                     />
                   </Row>
                 </>
@@ -154,14 +163,14 @@ export const Header = () => {
                       prefixIcon="gallery"
                       href="/gallery"
                       label={gallery.label}
-                      selected={pathname.startsWith("/gallery")}
+                      selected={routeStates.isGallery}
                     />
                   </Row>
                   <Row hide s={{ hide: false }}>
                     <ToggleButton
                       prefixIcon="gallery"
                       href="/gallery"
-                      selected={pathname.startsWith("/gallery")}
+                      selected={routeStates.isGallery}
                     />
                   </Row>
                 </>

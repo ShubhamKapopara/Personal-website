@@ -12,7 +12,7 @@ import {
   Line,
 } from "@once-ui-system/core";
 import { home, about, person, baseURL, routes } from "@/resources";
-import { Mailchimp } from "@/components";
+import { ContactForm } from "@/components";
 import { Projects } from "@/components/work/Projects";
 import { Posts } from "@/components/blog/Posts";
 
@@ -123,7 +123,7 @@ export default function Home() {
               </Heading>
             </Row>
             <Row flex={3} paddingX="20">
-              <Posts range={[1, 2]} columns="2" />
+              <Posts tag="Certificate" range={[1, 2]} columns="2" />
             </Row>
           </Row>
           <Row fillWidth paddingLeft="64" horizontal="end">
@@ -138,7 +138,7 @@ export default function Home() {
       </RevealFx>
       <Projects range={[2]} />
 
-      <Mailchimp />
+      <ContactForm />
     </Column>
   );
 }

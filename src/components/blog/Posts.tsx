@@ -8,6 +8,8 @@ interface PostsProps {
   thumbnail?: boolean;
   direction?: "row" | "column";
   exclude?: string[];
+  include?: string[];
+  tag?: string;
 }
 
 export function Posts({
@@ -15,19 +17,36 @@ export function Posts({
   columns = "1",
   thumbnail = false,
   exclude = [],
+  include,
+  tag,
   direction,
 }: PostsProps) {
-  let allBlogs = getPosts(["src", "app", "blog", "posts"]);
+  // Get posts (cached by utils.ts)
+  const allBlogs = getPosts(["src", "app", "blog", "posts"]);
 
-  // Exclude by slug (exact match)
-  if (exclude.length) {
-    allBlogs = allBlogs.filter((post) => !exclude.includes(post.slug));
+  // Apply filters efficiently
+  let filteredBlogs = allBlogs;
+  
+  if (include && include.length) {
+    const includeSet = new Set(include);
+    filteredBlogs = filteredBlogs.filter((post) => includeSet.has(post.slug));
   }
 
-  const sortedBlogs = allBlogs.sort((a, b) => {
+  if (exclude.length) {
+    const excludeSet = new Set(exclude);
+    filteredBlogs = filteredBlogs.filter((post) => !excludeSet.has(post.slug));
+  }
+
+  if (tag) {
+    filteredBlogs = filteredBlogs.filter((post) => post.metadata.tag === tag);
+  }
+
+  // Sort by date (newest first) - only if needed
+  const sortedBlogs = filteredBlogs.sort((a, b) => {
     return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
   });
 
+  // Apply range filter
   const displayedBlogs = range
     ? sortedBlogs.slice(range[0] - 1, range.length === 2 ? range[1] : sortedBlogs.length)
     : sortedBlogs;

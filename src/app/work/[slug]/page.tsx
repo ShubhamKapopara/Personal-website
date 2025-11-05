@@ -19,7 +19,6 @@ import { baseURL, about, person, work } from "@/resources";
 import { formatDate } from "@/utils/formatDate";
 import { ScrollToHash, CustomMDX } from "@/components";
 import { Metadata } from "next";
-import { Projects } from "@/components/work/Projects";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const posts = getPosts(["src", "app", "work", "projects"]);
@@ -28,18 +27,21 @@ export async function generateStaticParams(): Promise<{ slug: string }[]> {
   }));
 }
 
+// Helper function to extract slug from params
+function getSlugPath(slug: string | string[]): string {
+  return Array.isArray(slug) ? slug.join("/") : slug || "";
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string | string[] }>;
 }): Promise<Metadata> {
   const routeParams = await params;
-  const slugPath = Array.isArray(routeParams.slug)
-    ? routeParams.slug.join("/")
-    : routeParams.slug || "";
+  const slugPath = getSlugPath(routeParams.slug);
 
   const posts = getPosts(["src", "app", "work", "projects"]);
-  let post = posts.find((post) => post.slug === slugPath);
+  const post = posts.find((post) => post.slug === slugPath);
 
   if (!post) return {};
 
@@ -58,11 +60,10 @@ export default async function Project({
   params: Promise<{ slug: string | string[] }>;
 }) {
   const routeParams = await params;
-  const slugPath = Array.isArray(routeParams.slug)
-    ? routeParams.slug.join("/")
-    : routeParams.slug || "";
+  const slugPath = getSlugPath(routeParams.slug);
 
-  let post = getPosts(["src", "app", "work", "projects"]).find((post) => post.slug === slugPath);
+  const posts = getPosts(["src", "app", "work", "projects"]);
+  const post = posts.find((post) => post.slug === slugPath);
 
   if (!post) {
     notFound();
@@ -121,15 +122,28 @@ export default async function Project({
       {post.metadata.images.length > 0 && (
         <Media priority aspectRatio="16 / 9" radius="m" alt="image" src={post.metadata.images[0]} />
       )}
+      {(post.metadata.link || post.metadata.tableauLink) && (
+        <Row gap="24" wrap horizontal="center" marginBottom="l">
+          {post.metadata.tableauLink && (
+            <SmartLink
+              suffixIcon="arrowUpRightFromSquare"
+              href={post.metadata.tableauLink}
+            >
+              <Text variant="body-default-s">View Viz</Text>
+            </SmartLink>
+          )}
+          {post.metadata.link && (
+            <SmartLink
+              suffixIcon="arrowUpRightFromSquare"
+              href={post.metadata.link}
+            >
+              <Text variant="body-default-s">View project</Text>
+            </SmartLink>
+          )}
+        </Row>
+      )}
       <Column style={{ margin: "auto" }} as="article" maxWidth="xs">
         <CustomMDX source={post.content} />
-      </Column>
-      <Column fillWidth gap="40" horizontal="center" marginTop="40">
-        <Line maxWidth="40" />
-        <Heading as="h2" variant="heading-strong-xl" marginBottom="24">
-          Related projects
-        </Heading>
-        <Projects exclude={[post.slug]} range={[2]} />
       </Column>
       <ScrollToHash />
     </Column>

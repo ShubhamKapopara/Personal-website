@@ -8,17 +8,21 @@ interface ProjectsProps {
 }
 
 export function Projects({ range, exclude }: ProjectsProps) {
-  let allProjects = getPosts(["src", "app", "work", "projects"]);
+  // Get projects (cached by utils.ts)
+  let filteredProjects = getPosts(["src", "app", "work", "projects"]);
 
-  // Exclude by slug (exact match)
+  // Exclude by slug (exact match) - use Set for O(1) lookup
   if (exclude && exclude.length > 0) {
-    allProjects = allProjects.filter((post) => !exclude.includes(post.slug));
+    const excludeSet = new Set(exclude);
+    filteredProjects = filteredProjects.filter((post) => !excludeSet.has(post.slug));
   }
 
-  const sortedProjects = allProjects.sort((a, b) => {
+  // Sort by date (newest first)
+  const sortedProjects = filteredProjects.sort((a, b) => {
     return new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime();
   });
 
+  // Apply range filter
   const displayedProjects = range
     ? sortedProjects.slice(range[0] - 1, range[1] ?? sortedProjects.length)
     : sortedProjects;
@@ -36,6 +40,7 @@ export function Projects({ range, exclude }: ProjectsProps) {
           content={post.content}
           avatars={post.metadata.team?.map((member) => ({ src: member.avatar })) || []}
           link={post.metadata.link || ""}
+          tableauLink={post.metadata.tableauLink || ""}
         />
       ))}
     </Column>

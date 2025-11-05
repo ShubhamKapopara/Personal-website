@@ -37,6 +37,11 @@ const social: Social = [
     icon: "email",
     link: `mailto:${person.email}`,
   },
+  {
+    name: "Tableau",
+    icon: "openLink",
+    link: "https://public.tableau.com/app/profile/shubham.kapopara/vizzes",
+  },
 ];
 
 const home: Home = {
@@ -55,7 +60,7 @@ const home: Home = {
         </Text>
       </Row>
     ),
-    href: "/work/building-once-ui-a-customizable-design-system",
+    href: "/work/the-bookshelf",
   },
   //   subline: (
   //     <>
