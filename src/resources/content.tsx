@@ -39,7 +39,7 @@ const social: Social = [
   },
   {
     name: "Tableau",
-    icon: "openLink",
+    icon: "tableau",
     link: "https://public.tableau.com/app/profile/shubham.kapopara/vizzes",
   },
 ];
