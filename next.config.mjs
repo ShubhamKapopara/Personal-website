@@ -1,6 +1,6 @@
 import mdx from "@next/mdx";
 import { fileURLToPath } from "url";
-import { dirname, join } from "path";
+import { dirname } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,10 +12,6 @@ const withMDX = mdx({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
-
-  // Ensure Next.js uses correct .next directory
-  distDir: ".next",
-
   transpilePackages: ["next-mdx-remote"],
 
   images: {
