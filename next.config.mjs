@@ -56,8 +56,6 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["@once-ui-system/core"],
   },
-  // Allow cross-origin requests from network IPs in development
-  allowedDevOrigins: process.env.NODE_ENV === 'development' ? ['10.0.0.103'] : [],
 };
 
 export default withMDX(nextConfig);
