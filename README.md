@@ -86,8 +86,4 @@ It highlights my projects, professional experience, and technical skills through
 
 ---
 
-<div align="center">
 
-⭐ **Made with passion and precision by [Shubham Kapopara](https://github.com/ShubhamKapopara)**
-
-</div>
