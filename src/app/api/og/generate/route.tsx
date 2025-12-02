@@ -8,19 +8,37 @@ export async function GET(request: Request) {
   let title = url.searchParams.get("title") || "Portfolio";
 
   async function loadGoogleFont(font: string) {
-    const url = `https://fonts.googleapis.com/css2?family=${font}`;
-    const css = await (await fetch(url)).text();
-    const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/);
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+      
+      const fontUrl = `https://fonts.googleapis.com/css2?family=${font}`;
+      const css = await (await fetch(fontUrl, { signal: controller.signal })).text();
+      clearTimeout(timeoutId);
+      
+      const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/);
 
-    if (resource) {
-      const response = await fetch(resource[1]);
-      if (response.status == 200) {
-        return await response.arrayBuffer();
+      if (resource) {
+        const fontController = new AbortController();
+        const fontTimeoutId = setTimeout(() => fontController.abort(), 5000);
+        const response = await fetch(resource[1], { signal: fontController.signal });
+        clearTimeout(fontTimeoutId);
+        
+        if (response.status == 200) {
+          return await response.arrayBuffer();
+        }
       }
-    }
 
-    throw new Error("failed to load font data");
+      throw new Error("failed to load font data");
+    } catch (error) {
+      // Return null if font loading fails - ImageResponse will use fallback
+      console.error("Font loading error:", error);
+      return null;
+    }
   }
+
+  // Load font with timeout handling
+  const fontData = await loadGoogleFont("Geist:wght@400");
 
   return new ImageResponse(
     <div
@@ -106,13 +124,15 @@ export async function GET(request: Request) {
     {
       width: 1280,
       height: 720,
-      fonts: [
-        {
-          name: "Geist",
-          data: await loadGoogleFont("Geist:wght@400"),
-          style: "normal",
-        },
-      ],
+      fonts: fontData
+        ? [
+            {
+              name: "Geist",
+              data: fontData,
+              style: "normal",
+            },
+          ]
+        : [],
     },
   );
 }
